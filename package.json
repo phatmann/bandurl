@@ -1,0 +1,34 @@
+{
+  "name": "bandurl",
+  "description": "Provide URLs for band names",
+  "version": "0.1.0",
+  "homepage": "https://github.com/phatmann/bandurl",
+  "author": {
+    "name": "Tony Mann",
+    "email": "thephatmann@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:phatmann/bandurl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phatmann/bandurl/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/phatmann/bandurl/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/bandurl",
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.15"
+  },
+  "keywords": []
+}
