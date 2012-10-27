@@ -13,6 +13,7 @@ block content
     .right.ten.columns.offset-by-two
       h2 Songs
       .songs
-        each url, name in songs
-          li
-            a(href=url) #{name}
+        if songs
+          each url, name in songs
+            li
+              a(href=url) #{name}
