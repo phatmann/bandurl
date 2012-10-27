@@ -1,34 +1,32 @@
 {
-  "name": "bandurl",
-  "description": "Provide URLs for band names",
-  "version": "0.1.0",
-  "homepage": "https://github.com/phatmann/bandurl",
-  "author": {
-    "name": "Tony Mann",
-    "email": "thephatmann@gmail.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:phatmann/bandurl.git"
-  },
-  "bugs": {
-    "url": "https://github.com/phatmann/bandurl/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/phatmann/bandurl/blob/master/LICENSE-MIT"
-    }
-  ],
-  "main": "lib/bandurl",
+    "name": "express-coffee"
+  , "version": "1.5.1"
+  , "private": true
+  , "dependencies": {
+      "express": "3.x" 
+    , "coffee-script": "1.3.3"
+    , "jade": "0.26.0"
+    , "connect-assets": "2.2.1"
+    , "stylus": "0.27.0"
+    , "nib": "0.4.1"
+    , "async": "*"
+    , "echonest": "*"
+  }, "scripts": {
+    "install": "node_modules/coffee-script/bin/cake build",
+    "start": "node server.js",
+    "test": "mocha --require should --compilers coffee:coffee-script --colors"
+  }, "devDependencies": {
+      "coffee-script": "*"
+    , "mocha": "*"
+    , "should": "*"
+    , "request": "*"
+    , "supervisor": "*"
+    , "docco": "*"
+    , "which": "*"
+    , "underscore": "*"
+  }, 
   "engines": {
-    "node": ">= 0.6.0"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "devDependencies": {
-    "grunt": "~0.3.15"
-  },
-  "keywords": []
+    "node": "~0.8.x"
+    , "npm": "1.1.x"
+  }
 }

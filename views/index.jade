@@ -1,0 +1,18 @@
+extends layout
+block content
+  .container
+    .four.columns
+      input(placeholder='Band')
+      a.button(href="#") Search
+      h2 About
+      p BandURL provides a link for any band on any page
+
+      h2 Contact Us
+      p thephatmann@gmail.com
+
+    .right.ten.columns.offset-by-two
+      h2 Songs
+      .songs
+        each url, name in songs
+          li
+            a(href=url) #{name}
