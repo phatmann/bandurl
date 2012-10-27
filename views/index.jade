@@ -2,8 +2,9 @@ extends layout
 block content
   .container
     .four.columns
-      input(placeholder='Band')
-      a.button(href="#") Search
+      form(action='/', method='get')
+        input(placeholder='Band',name='band')
+        a.button#search_button(href="#") Search
       h2 About
       p BandURL provides a link for any band on any page
 
@@ -11,7 +12,8 @@ block content
       p thephatmann@gmail.com
 
     .right.ten.columns.offset-by-two
-      h2 Songs
+      h2 #{band}
+      h3 Songs
       .songs
         if songs
           each url, name in songs
