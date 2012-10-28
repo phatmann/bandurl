@@ -1,7 +1,7 @@
-express   = require 'express'
-#stylus    = require 'stylus'
-assets    = require 'connect-assets'
-bandurl   = require './bandurl.js'
+express    = require 'express'
+stylus     = require 'stylus'
+assets     = require 'connect-assets'
+bandInfo   = require './band_info.js'
 
 app = express()
 app.use assets()
@@ -11,7 +11,7 @@ app.set 'view engine', 'jade'
 app.get '/:band?', (req, resp) ->
   if req.params.band
     band = req.params.band.replace(/_/g, ' ')
-    bandurl.tracks band, (songs) ->
+    bandInfo.tracks band, (songs) ->
       resp.render 'index', {band: band, songs: songs}
   else if req.query.band
     resp.redirect '/' + req.query.band.replace(/\s/g, '_')

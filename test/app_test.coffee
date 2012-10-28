@@ -1,12 +1,12 @@
-request = require 'request'
-_ = require('underscore')
-bandurl = require('../app/bandurl.js')
+request   = require 'request'
+_         = require('underscore')
+bandInfo  = require('../app/band_info.js')
 
 describe 'Songs', ->
   songs = {}
 
   beforeEach (done) ->
-    bandurl.tracks 'massy ferguson', (tracks)->
+    bandInfo.tracks 'massy ferguson', (tracks)->
       songs = tracks
       done()
 
