@@ -12,10 +12,11 @@ block content
       p thephatmann@gmail.com
 
     .right.ten.columns.offset-by-two
-      h2 #{band.name}
-      h3 Songs
-      .songs
-        if songs
+      if band
+        h2 #{band.name}
+      if songs
+        h3 Songs
+        .songs
           for song in songs
             li
               a(href=#{song.url}) #{song.name}

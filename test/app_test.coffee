@@ -1,14 +1,15 @@
 request   = require 'request'
 _         = require('underscore')
-bandInfo  = require('../app/band_info.js')
+echonest  = require('../app/services/echo_nest')
 
 describe 'Songs', ->
   songs = {}
 
   beforeEach (done) ->
-    bandInfo.tracks 'massy ferguson', (tracks)->
-      songs = tracks
-      done()
+    echonest.Band.find 'massy ferguson', (band) ->
+      band.songs (s)->
+        songs = s
+        done()
 
   it 'should return songs', ->
     (_.size(songs) > 0).should.be.true

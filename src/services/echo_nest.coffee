@@ -13,7 +13,7 @@ class Echonest
     echonest = require 'echonest'
     @api = new echonest.Echonest(api_key: Echonest.API_KEY)
 
-  find_band: (name) ->
+  find_band: (name, callback) ->
     # TODO: resolve ambiguities via API
     new Band name
 
@@ -41,9 +41,9 @@ class Echonest
         callback songs
 
 class Band
-  @find: (name) ->
+  @find: (name, callback) ->
     @echonest ?= new Echonest
-    @echonest.find_band(name)
+    callback @echonest.find_band(name)
 
   constructor: (@name) ->
     @echonest ?= new Echonest
