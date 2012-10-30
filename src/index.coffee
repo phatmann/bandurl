@@ -1,7 +1,7 @@
 express    = require 'express'
 stylus     = require 'stylus'
 assets     = require 'connect-assets'
-bandInfo   = require './band_info.js'
+echonest   = require './services/echo_nest'
 
 app = express()
 app.use assets()
@@ -10,8 +10,9 @@ app.set 'view engine', 'jade'
 
 app.get '/:band?', (req, resp) ->
   if req.params.band
-    band = req.params.band.replace(/_/g, ' ')
-    bandInfo.tracks band, (songs) ->
+    name = req.params.band.replace(/_/g, ' ')
+    band = echonest.Band.find(name)
+    band.songs (songs) ->
       resp.render 'index', {band: band, songs: songs}
   else if req.query.band
     resp.redirect '/' + req.query.band.replace(/\s/g, '_')
