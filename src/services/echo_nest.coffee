@@ -11,32 +11,24 @@ class Echonest
 
   constructor: ->
     echonest = require 'echonest'
-    @api = new echonest.Echonest(api_key: @API_KEY)
+    @api = new echonest.Echonest(api_key: Echonest.API_KEY)
 
   find_band: (name) ->
     # TODO: resolve ambiguities via API
     new Band name
 
-class Band
-  @find: (name) ->
-    @echonest ?= new Echonest
-    @echonest.find_band(name)
-
-  constructor: (@name) ->
-    @echonest ?= new Echonest
-
-  songs: (callback) ->
+  find_songs: (band_name, callback) ->
     rdio = require ('./rdio')
     @rdio ?= new rdio.Rdio
 
     params =
-      artist:   @name
+      artist:   band_name
       bucket:   ['tracks', 'id:rdio-US'] # TODO: expand to all services
       results:  5
       sort:     'song_hotttnesss-desc'
       limit:    true
 
-    @echonest.api.song.search params, (error, response) =>
+    @api.song.search params, (error, response) =>
       songs = for song in response.songs
         [vendor, type, key] = song.tracks[0].foreign_id.split(':')
         new Song song.title, vendor, type, key
@@ -48,8 +40,18 @@ class Band
       async.forEach songs, getUrl, (err) ->
         callback songs
 
+class Band
+  @find: (name) ->
+    @echonest ?= new Echonest
+    @echonest.find_band(name)
+
+  constructor: (@name) ->
+    @echonest ?= new Echonest
+
+  songs: (callback) ->
+    @echonest.find_songs(@name, callback)
+
 class Song
   constructor: (@name, @vendor, @type, @key) ->
 
 exports.Band = Band
-# exports.Song = Song
