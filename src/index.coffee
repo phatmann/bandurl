@@ -11,9 +11,9 @@ app.set 'view engine', 'jade'
 app.get '/:band?', (req, resp) ->
   if req.params.band
     name = req.params.band.replace(/_/g, ' ')
-    echonest.Band.find name, (band) ->
-      band.songs (songs) ->
-        resp.render 'index', {band: band, songs: songs}
+    echonest.Band.find name, (bands) ->
+      bands[0].songs (songs) ->
+        resp.render 'index', {band: bands[0], songs: songs}
   else if req.query.band
     resp.redirect '/' + req.query.band.replace(/\s/g, '_')
   else

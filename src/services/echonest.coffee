@@ -8,16 +8,20 @@ class Echonest
     @api = new echonest.Echonest(api_key: Echonest.API_KEY)
     @services = require './echonest/services'
 
-  find_band: (name, callback) ->
-    # TODO: resolve ambiguities via API
-    new Band name
+  findBands: (name, callback) ->
+    params =
+      name: name
 
-  find_songs: (band_name, callback) ->
+    @api.artist.search params, (error, response) =>
+      bands = (new Band(artist.name) for artist in response.artists)
+      callback bands
+
+  findSongs: (bandName, callback) ->
     bucket = ("id:#{name}-WW" for name, service of @services when service.tracks)
     bucket.push 'tracks'
 
     params =
-      artist:   band_name
+      artist:   bandName
       bucket:   bucket
       results:  5
       sort:     'song_hotttnesss-desc'
@@ -40,13 +44,13 @@ class Echonest
 class Band
   @find: (name, callback) ->
     @echonest ?= new Echonest
-    callback @echonest.find_band(name)
+    @echonest.findBands(name, callback)
 
   constructor: (@name) ->
     Band.echonest ?= new Echonest
 
   songs: (callback) ->
-    Band.echonest.find_songs(@name, callback)
+    Band.echonest.findSongs(@name, callback)
 
 class Song
   constructor: (@name, @vendor, @key) ->
