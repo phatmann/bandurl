@@ -17,4 +17,4 @@ class Rdio
       song.url = response.result[song.key].shortUrl unless err
       callback(err)
 
-exports.Rdio = Rdio
+module.exports = new Rdio

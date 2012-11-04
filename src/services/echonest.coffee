@@ -1,9 +1,3 @@
-# 
-# bandurl
-# https://github.com/phatmann/bandurl
-# 
-# Copyright (c) 2012 Tony Mann
-
 async = require('async')
 
 class Echonest
@@ -12,29 +6,32 @@ class Echonest
   constructor: ->
     echonest = require 'echonest'
     @api = new echonest.Echonest(api_key: Echonest.API_KEY)
+    @services = require './echonest/services'
 
   find_band: (name, callback) ->
     # TODO: resolve ambiguities via API
     new Band name
 
   find_songs: (band_name, callback) ->
-    rdio = require ('./rdio')
-    @rdio ?= new rdio.Rdio
+    bucket = ("id:#{name}-WW" for name, service of @services when service.tracks)
+    bucket.push 'tracks'
 
     params =
       artist:   band_name
-      bucket:   ['tracks', 'id:rdio-US'] # TODO: expand to all services
+      bucket:   bucket
       results:  5
       sort:     'song_hotttnesss-desc'
       limit:    true
 
     @api.song.search params, (error, response) =>
       songs = for song in response.songs
-        [vendor, type, key] = song.tracks[0].foreign_id.split(':')
-        new Song song.title, vendor, type, key
+        [catalog, type, key]  = song.tracks[0].foreign_id.split(':')
+        [vendor, locale]      = catalog.split('-')
+        new Song song.title, vendor, key
 
       getUrl = (song, callback) =>
-        @rdio.getUrl song, (err) ->
+        service = this[song.vendor] ?= require ('./' + vendor)
+        service.getUrl song, (err) ->
           callback err
       
       async.forEach songs, getUrl, (err) ->
@@ -46,12 +43,12 @@ class Band
     callback @echonest.find_band(name)
 
   constructor: (@name) ->
-    @echonest ?= new Echonest
+    Band.echonest ?= new Echonest
 
   songs: (callback) ->
-    @echonest.find_songs(@name, callback)
+    Band.echonest.find_songs(@name, callback)
 
 class Song
-  constructor: (@name, @vendor, @type, @key) ->
+  constructor: (@name, @vendor, @key) ->
 
 exports.Band = Band

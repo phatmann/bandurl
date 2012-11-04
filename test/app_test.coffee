@@ -1,6 +1,6 @@
 request   = require 'request'
 _         = require('underscore')
-echonest  = require('../app/services/echo_nest')
+echonest  = require('../app/services/echonest')
 
 describe 'Songs', ->
   songs = {}

@@ -1,7 +1,7 @@
 express    = require 'express'
 stylus     = require 'stylus'
 assets     = require 'connect-assets'
-echonest   = require './services/echo_nest'
+echonest   = require './services/echonest'
 
 app = express()
 app.use assets()
