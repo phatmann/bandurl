@@ -51,7 +51,7 @@ class Band
     Band.echonest ?= new Echonest
 
   songs: (callback) ->
-    Band.echonest.findSongs(@id, callback)
+    Band.echonest.findSongs @id, callback
 
 class Song
   constructor: (@name, @vendor, @key) ->

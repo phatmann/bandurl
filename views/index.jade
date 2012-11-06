@@ -12,6 +12,15 @@ block content
       p thephatmann@gmail.com
 
     .right.ten.columns.offset-by-two
+      if bands
+        if bands.length > 0
+          h3 Bands
+          .bands
+            for band in bands
+              li
+                a(href=band.url) #{band.name}
+        else
+          p No bands found.
       if band
         h2 #{band.name}
       if songs
@@ -19,4 +28,4 @@ block content
         .songs
           for song in songs
             li
-              a(href=#{song.url}) #{song.name}
+              a(href=song.url) #{song.name}
