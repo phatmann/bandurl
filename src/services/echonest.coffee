@@ -13,19 +13,19 @@ class Echonest
       name: name
 
     @api.artist.search params, (error, response) =>
-      bands = (new Band(artist.name) for artist in response.artists)
+      bands = (new Band(artist.name, artist.id) for artist in response.artists)
       callback bands
 
-  findSongs: (bandName, callback) ->
+  findSongs: (bandID, callback) ->
     bucket = ("id:#{name}-WW" for name, service of @services when service.tracks)
     bucket.push 'tracks'
 
     params =
-      artist:   bandName
-      bucket:   bucket
-      results:  5
-      sort:     'song_hotttnesss-desc'
-      limit:    true
+      artist_id:   bandID
+      bucket:      bucket
+      results:     5
+      sort:        'song_hotttnesss-desc'
+      limit:       true
 
     @api.song.search params, (error, response) =>
       songs = for song in response.songs
@@ -46,11 +46,11 @@ class Band
     @echonest ?= new Echonest
     @echonest.findBands(name, callback)
 
-  constructor: (@name) ->
+  constructor: (@name, @id) ->
     Band.echonest ?= new Echonest
 
   songs: (callback) ->
-    Band.echonest.findSongs(@name, callback)
+    Band.echonest.findSongs(@id, callback)
 
 class Song
   constructor: (@name, @vendor, @key) ->
