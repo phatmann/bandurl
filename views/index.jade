@@ -21,19 +21,22 @@ block content
                 a(href=band.url) #{band.name}
         else
           p No bands found.
+
       if band
         h2 #{band.name}
+
+      if images
+        .images
+          for image in images
+            img(src=image)
+
       if songs
         h3 Songs
         .songs
           for song in songs
             li
               a(href=song.url) #{song.name}
-
-      if images
-        .images
-          for image in images
-            img(src=image)
+              
       if biography
         h3 About
         .biography #{biography}
