@@ -29,3 +29,6 @@ block content
           for song in songs
             li
               a(href=song.url) #{song.name}
+      if biography
+        h3 About
+        .biography #{biography}
