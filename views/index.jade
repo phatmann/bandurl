@@ -29,6 +29,11 @@ block content
           for song in songs
             li
               a(href=song.url) #{song.name}
+
+      if images
+        .images
+          for image in images
+            img(src=image)
       if biography
         h3 About
         .biography #{biography}

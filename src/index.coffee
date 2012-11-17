@@ -15,7 +15,7 @@ handle_to_name = (handle)->
   handle.replace(/_/g, ' ')
 
 app.get '/:band?', (req, resp) ->
-  view_params = {bands: null, band: null, songs: null, biography: null}
+  view_params = {bands: null, band: null, songs: null, biography: null, images: null}
 
   if req.params.band
     name = handle_to_name req.params.band
@@ -24,6 +24,7 @@ app.get '/:band?', (req, resp) ->
         band = bands[0]
         view_params.band = band
         view_params.biography = band.biographies[0]
+        view_params.images    = band.images[0..1]
         band.songs (songs) ->
           view_params.songs = songs
           resp.render 'index', view_params

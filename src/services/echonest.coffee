@@ -11,7 +11,7 @@ class Echonest
   findBands: (name, callback) ->
     params =
       name: name
-      bucket: ['biographies']
+      bucket: ['biographies', 'images']
 
     @api.artist.search params, (error, response) =>
       callback response.artists
@@ -45,15 +45,17 @@ class Band
   @find: (name, callback) ->
     @echonest ?= new Echonest
     artists = @echonest.findBands name, (artists) ->
-      bands = (new Band(artist.name, artist.id, artist.biographies) for artist in artists)
+      bands = (new Band(artist) for artist in artists)
       callback bands
 
-  constructor: (@name, @id, biographies) ->
-    Band.echonest ?= new Echonest
-    @biographies = (biography.text for biography in biographies \
+  constructor: (artist) ->
+    [@name, @id] = [artist.name, artist.id]
+    @images = (image.url for image in artist.images)
+    @biographies = (biography.text for biography in artist.biographies \
       when not biography.truncated and biography.license.attribution isnt 'n/a')
 
   songs: (callback) ->
+    Band.echonest ?= new Echonest
     Band.echonest.findSongs @id, callback
 
 class Song
