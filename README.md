@@ -7,5 +7,7 @@
 * Use /band/:name for band URLs
 * Change echonest module to use async
 * Better method of associating band name in URL with band ID
+* Page title
+* Update unit tests
 
 

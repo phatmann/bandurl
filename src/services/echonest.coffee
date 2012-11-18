@@ -41,6 +41,21 @@ class Echonest
       async.forEach songs, getUrl, (err) ->
         callback songs
 
+  findSimilarBands: (bandID, callback) ->
+    params =
+      id:       bandID
+      results:  5
+
+    @api.artist.similar params, (error, response) =>
+      callback response.artists
+
+  findTerms: (bandID, callback) ->
+    params =
+      id:       bandID
+
+    @api.artist.terms params, (error, response) =>
+      callback response.terms
+
 class Band
   @find: (name, callback) ->
     @echonest ?= new Echonest
@@ -49,14 +64,24 @@ class Band
       callback bands
 
   constructor: (artist) ->
+    Band.echonest ?= new Echonest
     [@name, @id] = [artist.name, artist.id]
-    @images = (image.url for image in artist.images)
+    @images = (image.url for image in artist.images) if artist.images
     @biographies = (biography.text for biography in artist.biographies \
-      when not biography.truncated and biography.license.attribution isnt 'n/a')
+      when not biography.truncated and biography.license.attribution isnt 'n/a') if artist.biographies
 
   songs: (callback) ->
-    Band.echonest ?= new Echonest
     Band.echonest.findSongs @id, callback
+
+  similarBands: (callback) ->
+    Band.echonest.findSimilarBands @id, (artists) ->
+      bands = (new Band(artist) for artist in artists)
+      callback bands
+
+  terms: (callback) ->
+    Band.echonest.findTerms @id, (terms) ->
+      terms = (term.name for term in terms)
+      callback terms[0..2].join ', '
 
 class Song
   constructor: (@name, @vendor, @key) ->

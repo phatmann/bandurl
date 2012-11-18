@@ -24,6 +24,7 @@ block content
 
       if band
         h2 #{band.name}
+        p #{terms}
 
       if images
         .images
@@ -36,7 +37,14 @@ block content
           for song in songs
             li
               a(href=song.url) #{song.name}
-              
+
+      if similarBands
+        h3 Similar Bands
+        .bands
+          for band in similarBands
+            li
+              a(href=band.url) #{band.name}
+
       if biography
         h3 About
         .biography #{biography}
