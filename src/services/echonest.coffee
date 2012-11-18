@@ -1,4 +1,4 @@
-async = require('async')
+async = require 'async' 
 
 class Echonest
   @API_KEY = 'HR71PV9JF1LXJUYWX'
