@@ -19,7 +19,7 @@ app.get '/', (req, resp) ->
   if req.query.band
     name = handleToName req.query.band
     echonest.Band.find name, (bands) ->
-      if bands.length == 1 or bands[0].name.toUpperCase == name.toUpperCase
+      if bands.length == 1 or (bands.length > 1 and bands[0].name.toUpperCase() == name.toUpperCase())
         resp.redirect '/' + nameToHandle(bands[0].name)
       else
         band.url = nameToHandle(band.name) for band in bands
@@ -30,7 +30,7 @@ app.get '/', (req, resp) ->
 app.get '/:band', (req, resp) ->
   name = handleToName req.params.band
   echonest.Band.find name, (bands) ->
-    if bands.length > 1 and bands[0].name.toUpperCase != name.toUpperCase
+    if bands.length > 1 and bands[0].name.toUpperCase() != name.toUpperCase()
       resp.redirect '/?' + nameToHandle(bands[0].name) # TODO: use other view without redirect
     else
       band = bands[0]
