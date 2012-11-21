@@ -23,9 +23,9 @@ app.get '/', (req, resp) ->
         resp.redirect '/' + nameToHandle(bands[0].name)
       else
         band.url = nameToHandle(band.name) for band in bands
-        resp.render 'index', {bands: bands}
+        resp.render 'index', {bands: bands, pageTitle: 'Band Search'}
   else
-    resp.render 'index', {bands: null}
+    resp.render 'index', {bands: null, pageTitle: 'Home'}
 
 app.get '/:band', (req, resp) ->
   name = handleToName req.params.band
@@ -34,9 +34,8 @@ app.get '/:band', (req, resp) ->
       resp.redirect '/?' + nameToHandle(bands[0].name) # TODO: use other view without redirect
     else
       band = bands[0]
-      view_params = {}
+      view_params = {pageTitle: band.name}
       view_params.band      = band
-      view_params.biography = band.biographies[0]
       view_params.images    = band.images[0..1]
       async.parallel {
         getSongs: (callback) ->

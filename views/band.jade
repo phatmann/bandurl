@@ -1,35 +1,21 @@
 extends layout
 block content
-  .container
-    .four.columns
-      form(action='/', method='get')
-        input(placeholder='Band',name='band')
-        input(type='submit') Search
-      h2 About
-      p BandURL provides a link for any band on any page
+  h2 #{band.name}
+  p #{terms}
 
-      h2 Contact Us
-      p thephatmann@gmail.com
+  .images
+    for image in images
+      div
+        img(src=image)
 
-    .right.ten.columns.offset-by-two
-      h2 #{band.name}
-      p #{terms}
+  h3 Songs
+  .songs
+    for song in songs
+      li
+        a(href=song.url) #{song.name}
 
-      .images
-        for image in images
-          img(src=image)
-
-      h3 Songs
-      .songs
-        for song in songs
-          li
-            a(href=song.url) #{song.name}
-
-      h3 Similar Bands
-      .bands
-        for band in similarBands
-          li
-            a(href=band.url) #{band.name}
-
-      h3 About
-      .biography #{biography}
+  h3 Similar Bands
+  .bands
+    for band in similarBands
+      li
+        a(href=band.url) #{band.name}

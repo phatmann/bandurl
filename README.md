@@ -2,12 +2,10 @@
 
 * Hook to other music services
 * Show play button
-* Don't use author's CSS CDN
-* Consider Bootstrap
+* Consider Bootstrap or HTML5 Boilerplate
 * Use /band/:name for band URLs
 * Change echonest module to use async
-* Better method of associating band name in URL with band ID
-* Page title
+* Better method of associating band name in URL with band ID; cache ID in db?
 * Update unit tests
 
 

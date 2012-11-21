@@ -11,7 +11,7 @@ class Echonest
   findBands: (name, callback) ->
     params =
       name: name
-      bucket: ['biographies', 'images']
+      bucket: ['images']
 
     @api.artist.search params, (error, response) =>
       callback response.artists
@@ -67,8 +67,6 @@ class Band
     Band.echonest ?= new Echonest
     [@name, @id] = [artist.name, artist.id]
     @images = (image.url for image in artist.images) if artist.images
-    @biographies = (biography.text for biography in artist.biographies \
-      when not biography.truncated and biography.license.attribution isnt 'n/a') if artist.biographies
 
   songs: (callback) ->
     Band.echonest.findSongs @id, callback
