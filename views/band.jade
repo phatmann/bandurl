@@ -1,22 +1,24 @@
 extends layout
 block content
-  .container
-    h2= band.name
-    .terms= terms
+  .header-container
+    header.wrapper
+      h1.title= band.name
+      .terms= terms
+  .main-container
+    .main.wrapper
+      .images
+        for image in images
+          div
+            img(src=image)
 
-    .images
-      for image in images
-        div
-          img(src=image)
+      h3 Songs
+      .songs
+        for song in songs
+          li
+            a(href=song.url)= song.name
 
-    h3 Songs
-    .songs
-      for song in songs
-        li
-          a(href=song.url)= song.name
-
-    h3 Similar Bands
-    .bands
-      for band in similarBands
-        li
-          a(href=band.url)= band.name
+      h3 Similar Bands
+      .bands
+        for band in similarBands
+          li
+            a(href=band.url)= band.name
