@@ -4,6 +4,8 @@
 * Update unit tests
 * Fix photo layout to be flexible (random/animated?) (e.g. Pufferfish)
 * Better styling
+* Separate home page and search pages
+* Header for search and home pages
 
 ### MAYBE
 * Better method of associating band name in URL with band ID; cache ID in db?
